@@ -17,7 +17,7 @@ macro bind(def, element)
 end
 
 # ╔═╡ 858435bc-71d1-11f1-a682-a7922dda607a
-using PlutoUI, Printf
+using PlutoUI, Printf, Random, HypertextLiteral
 
 # ╔═╡ 24941a8f-3275-4730-9bbe-2aa3610a7ea9
 md"""# Exercícios do Mundo 1
@@ -178,13 +178,296 @@ Crie um programa que leia quanto dinheiro uma pessoa tem na carteira e mostre qu
 # ╔═╡ 01e7220f-77fd-4488-9df6-754cd5728fdd
 println("Com R\$$reais você pode comprar até U\$$(@sprintf("%.2f", reais/5.16))")
 
+# ╔═╡ ae0664b3-e585-4ee6-bf10-b14761c180bc
+md"""## Exercício 11
+Faça um programa que leia a largura e a altura de uma parede em metros, calcule a sua área e a quantidade de tinta necessária para pintá-la, sabendo que cada litro de tinta pinta uma área de 2 metros quadrados."""
+
+# ╔═╡ f4556d4b-fb89-41d0-8275-3326471d7dbe
+@bind largura NumberField(default=1.0)
+
+# ╔═╡ 32226171-41dd-4694-ab40-2fa9013554c6
+@bind altura NumberField(default=1.0)
+
+# ╔═╡ c4aa2926-43db-4143-912c-de9692b92896
+begin
+	area = largura * altura
+	tinta = area / 2
+	println("Para pintar uma parede de $(@sprintf("%.2f", area))m² ($largura x $altura). Serão necessários $(@sprintf("%.2f", tinta))l de tinta.")
+end
+
+# ╔═╡ acf2f464-7d4a-4949-ac2f-71ea1bd7c4bb
+md"""## Exercício 12
+Faça um algoritmo que leia o preço de um produto e mostre seu novo preço, com 5% de desconto."""
+
+# ╔═╡ 949e2c16-5ca3-4b3c-ae3a-1dd27e712e53
+@bind preco NumberField(default=0.99)
+
+# ╔═╡ 6495b666-7050-4ac7-93cd-e6bfa791dd03
+println("O produto que custa R\$$(@sprintf("%.2f", preco)) receberá 5% de desconto e passará a custar R\$$(@sprintf("%.2f", preco - (preco * .05)))")
+
+# ╔═╡ 8961f80b-b84e-49a7-ad76-d91787c47470
+md"""## Exercício 13
+Faça um algoritmo que leia o salário de um funcionário e mostre seu novo salário, com 15% de aumento."""
+
+# ╔═╡ a2739d35-8cf8-4926-883b-d620f680213a
+@bind salario NumberField(default=1621)
+
+# ╔═╡ 0806798c-3a14-4054-a9ef-297c907a9b8f
+println("O salário era de R\$$(@sprintf("%.2f", salario)), receberá um reajuste de 15% e passará a ser de R\$$(@sprintf("%.2f", salario * 1.15))")
+
+# ╔═╡ 015f354b-5f16-43b8-ba9e-40991c787993
+md"""## Exercício 14
+Escreva um programa que converta uma temperatura digitando em graus Celsius e converta para graus Fahrenheit."""
+
+# ╔═╡ 596c1613-5b78-47f7-a8f6-58b10e52ccf5
+@bind celsius NumberField(default=18)
+
+# ╔═╡ f3b3ba63-6dfd-4daa-8aff-48a19b46515c
+begin
+	fahrenheit = celsius * 1.8 + 32
+	println("$(celsius)ºC equivale a $(@sprintf("%.1f", fahrenheit))ºF")
+end
+
+# ╔═╡ a91c5dbe-ea13-4044-9ce5-7822fe6be4b1
+md"""## Exercício 15
+Escreva um programa que pergunte a quantidade de Km percorridos por um carro alugado e a quantidade de dias pelos quais ele foi alugado. Calcule o preço a pagar, sabendo que o carro custa R\$60 por dia e R\$0,15 por Km rodado."""
+
+# ╔═╡ 46127de8-c6ce-4f2c-9550-ceea616e49c0
+@bind kilometragem NumberField(default=0)
+
+# ╔═╡ a9eaaa20-9e78-424e-90d1-8daacfbe9beb
+@bind dias NumberField(default=0)
+
+# ╔═╡ 858c5382-b065-4ead-ae65-408f14fadf63
+begin
+	valor_total = 60 * dias + .15 * kilometragem
+	println("Você alugou o carro por $dias e rodou $(@sprintf("%.2f", kilometragem)). O valor total a ser pago é de R\$$(@sprintf("%.2f", valor_total))")
+end
+
+# ╔═╡ f88cec7e-0594-4e93-8051-97b9f1eb1453
+md"""## Exercício 16
+Crie um programa que leia um número Real qualquer pelo teclado e mostre na tela a sua porção Inteira."""
+
+# ╔═╡ f8a2193e-775b-48af-b522-e541ef583d9b
+@bind x Slider(0.00 : 0.01 : 99.00; show_value=true)
+
+# ╔═╡ 3e9c4fe6-7424-42e2-b884-e71d5d6e2266
+println("O valor atual de x é $x, mas sua porção inteira é $(Int(trunc(x)))")
+
+# ╔═╡ 0e909120-aefb-4445-ac99-4c40207876a5
+md"""## Exercício 17
+Faça um programa que leia o comprimento do cateto oposto e do cateto adjacente de um triângulo retângulo. Calcule e mostre o comprimento da hipotenusa."""
+
+# ╔═╡ ff66b45f-2d5c-4bb8-a84e-362ef9fdfeb5
+@bind cateto_ops NumberField(default=0)	
+
+# ╔═╡ d7b77f0e-b5dc-442f-b699-774e5956738b
+@bind cateto_adj NumberField(default=0)
+
+# ╔═╡ 28bbef28-43ea-42ca-8a55-f3bf767eb60d
+begin
+	hipotenusa = √(cateto_ops^2 + cateto_adj^2)
+	println("A hipotenusa vai medir $(@sprintf("%.2f", hipotenusa))")
+end
+
+# ╔═╡ 38f15a68-76e5-45c5-9796-065735ef27d7
+md"""## Exercício 18
+Faça um programa que leia um ângulo qualquer e mostre na tela o valor do seno, cosseno e tangente desse ângulo."""
+
+# ╔═╡ ba0dcb39-b579-4ac5-a0cf-8b4919f922cb
+@bind angulo Slider(0.00 : 0.01 : 360.00; show_value=true)
+
+# ╔═╡ 5c193c28-e9af-4576-9364-fbae8ed2e9ea
+begin
+	radianos = angulo * π/180
+	println("Seno: $(@sprintf("%.2f", sin(radianos)))")
+	println("Cosseno: $(@sprintf("%.2f", cos(radianos)))")
+	println("Tangente: $(@sprintf("%.2f", tan(radianos)))")
+end
+
+# ╔═╡ 45816ffa-4de3-481e-b8da-71fba5f26239
+md"""## Exercício 19
+Um professor quer sortear um dos seus quatro alunos para apagar o quadro. Faça um programa que ajude ele, lendo o nome dos alunos e escrevendo na tela o nome do escolhido."""
+
+# ╔═╡ db820568-eb19-42ea-a86b-07823b1b2d43
+@bind a1 TextField(default="Antedeguemon")
+
+# ╔═╡ efec43cf-813d-4782-a0fc-3071b2c32296
+@bind a2 TextField(default="Antedeguemon 2")
+
+# ╔═╡ 061d9d73-cfc2-44da-86a7-3ae85df6d41c
+@bind a3 TextField(default="Antedeguemon 3")
+
+# ╔═╡ 79a16707-e58c-405a-aee2-5bcbded54948
+@bind a4 TextField(default="Antedeguemon 4")
+
+# ╔═╡ db717a0b-847a-411e-97ba-ee9dad0a72f0
+begin
+	alns = [a1, a2, a3, a4]
+	println(rand(alns))
+end
+
+# ╔═╡ 60708e1f-5256-48c5-a6d3-42fa704aa59c
+md"""## Exercício 20
+O mesmo professor do desafio 019 quer sortear a ordem de apresentação de trabalhos dos alunos. Faça um programa que leia o nome dos quatro alunos e mostre a ordem sorteada."""
+
+# ╔═╡ 5f7d57a0-fff7-41e5-af78-04a3f6c9c889
+@bind aluno1 TextField(default="Antedeguemon")
+
+# ╔═╡ 8105682d-5e0a-4615-a001-9f0249ced22f
+@bind aluno2 TextField(default="Antedeguemon 2")
+
+# ╔═╡ 67a0e5c6-e177-4280-a312-f2ee32935173
+@bind aluno3 TextField(default="Antedeguemon 3")
+
+# ╔═╡ 4c50e4c6-fb6e-4d3d-b368-6f0414471bf8
+@bind aluno4 TextField(default="Antedeguemon 4")
+
+# ╔═╡ 7796aa0d-02e7-471a-bb5d-1ed1438138a8
+begin
+	alunos = [aluno1, aluno2, aluno3, aluno4]
+	shuffle!(alunos)
+	println("A ordem de apresentação será:")
+	println(alunos)
+end
+
+# ╔═╡ a1c8ccbf-bc97-4bd0-874f-7df8a2eeea7b
+md"""## Exercício 21
+Faça um programa que abra e reproduza o áudio de um arquivo MP3.
+(Ps.: Não faz sentido fazer isso num notebook Pluto, mas e daí?)"""
+
+# ╔═╡ 86eb8089-4899-4565-995d-5c2c4f6e4fd2
+begin #Não funciona kk
+	audio_path = expanduser("miss.m4a")
+    @htl("""
+    <audio controls autoplay>
+        <source src="$(audio_path)" type="audio/m4a">
+    </audio>
+    """)
+end
+
+# ╔═╡ 94a05f45-40e9-4f52-a5ab-b98d467f28a4
+md"""## Exercício 22
+Crie um programa que leia o nome completo de uma pessoa e mostre:
+- O nome com todas as letras maiúsculas e minúsculas.
+- Quantas letras ao todo (sem considerar espaços).
+- Quantas letras tem o primeiro nome."""
+
+# ╔═╡ 7c14a682-3647-417a-a6d3-9e0f93af0d32
+@bind nome1 TextField(default="Antedeguemon Epaminondas Bob da Silva")
+
+# ╔═╡ 3eec46c5-f29c-4f26-8017-79efb07a7731
+begin
+	# Eliminar mais de um espaço nos meios
+	nome_split = join(split(nome1), " ")
+	
+	println("Analisando seu nome... $nome_split")
+	println("Seu nome possui $(length(nome_split) - count(' ', nome_split))")
+	println("Seu nome em maiúsculas é $(uppercase(nome_split))")
+	println("Seu nome em minúsculas é $(lowercase(nome_split))")
+	println("Seu primeiro nome é $(split(nome_split)[1]) e tem $(length(split(nome_split)[1])) letras")
+end
+
+# ╔═╡ 883873c5-c368-4062-b402-9f991c008bb9
+md"""## Exercício 23
+Faça um programa que leia um número de 0 a 9999 e mostre na tela cada um dos dígitos separados."""
+
+# ╔═╡ ad61a624-91ce-4908-807e-6c146d1b9413
+@bind zeroa9999 Slider(0 : 1 : 9999, show_value=true)
+
+# ╔═╡ 193e3ef2-2e2a-4182-9a85-bd79cf68ab15
+begin
+	un = zeroa9999 ÷ 1 % 10
+	# un = string(zeroa9999)[4]
+	println("Unidades: $un")
+	dz = zeroa9999 ÷ 10 % 10
+	# dz = string(zeroa9999)[3]
+	println("Dezenas: $dz")
+	cn = zeroa9999 ÷ 100 % 10
+	# cn = string(zeroa9999)[2]
+	println("Centenas: $cn")
+	ml = zeroa9999 ÷ 1000 % 10
+	# ml = string(zeroa9999)[1]
+	println("Milhares: $ml")
+end
+
+# ╔═╡ a47801c0-d6e3-44d3-862d-78f9c9b5e797
+md"""## Exercício 24
+Crie um programa que leia o nome de uma cidade diga se ela começa ou não com o nome "SANTO"."""
+
+# ╔═╡ a98ff4f5-9513-4585-a76b-2d4e31063693
+@bind cidade TextField(default="Raio Que o Parta")
+
+# ╔═╡ 9445ae8b-c305-455b-bc44-5c34db3fabdf
+println("$cidade começa com \"Santo\"?: $( startswith(lowercase(split(cidade)[1]), "santo") )")
+
+# ╔═╡ 45d5f4b9-2166-4d87-a5d9-dd37fd041a74
+md"""## Exercício 25
+Crie um programa que leia o nome de uma pessoa e diga se ela tem "SILVA" no nome."""
+
+# ╔═╡ 2409c92a-0936-459f-bf2e-af91c35cb1d3
+@bind nome_completo TextField(default="Antedeguemon Epaminondas da Silva Bob")
+
+# ╔═╡ 6ccc6b56-fb54-4de0-b2a3-f2fff06634f2
+println("$nome_completo tem \"Silva\"?: $(occursin("silva", lowercase(nome_completo)))")
+
+# ╔═╡ e4aa11ec-122f-4d9c-98db-8fee38933109
+md"""## Exercício 26
+Faça um programa que leia uma frase pelo teclado e mostre quantas vezes aparece a letra "A", em que posição ela aparece a primeira vez e em que posição ela aparece a última vez."""
+
+# ╔═╡ 3c26fe37-ca71-481d-80da-29c52ce4b713
+@bind frase TextField(default="Meu amigo Antedeguemon")
+
+# ╔═╡ 2519ad15-63be-4082-a6fd-00b364553e19
+begin
+	# Eliminar espaços extras no meio
+	frase_split = join(split(frase), " ")
+	
+	println("Frase: $frase_split")
+	println("A letra A aparece $(count("a", lowercase(frase_split)))")
+	println("A primeira letra A apareceu na posição $(findfirst('a', lowercase(frase_split)))")
+	println("A última letra A apareceu na posição $(findlast('a', lowercase(frase_split)))")
+end
+
+# ╔═╡ e61cb836-6298-43a5-a7b4-c395df4a1b8f
+md"""## Exercício 27
+Faça um programa que leia o nome completo de uma pessoa, mostrando em seguida o primeiro e o último nome separadamente."""
+
+# ╔═╡ aa10066d-2f97-410d-ac3c-5df167622402
+@bind pessoa TextField(default="Antedeguemon Epaminondas Bob da Silva")
+
+# ╔═╡ 1b8841ca-e1bf-4a4f-9525-60d3d280715b
+begin
+	# Eliminar espaços extras no meio
+	pessoa_split = join(split(pessoa), ' ')
+
+	primeiro_nome = split(pessoa_split)[1]
+	ultimo_nome = split(pessoa_split)[length(split(pessoa_split))]
+	
+	println("Nome Completo: $pessoa_split")
+	println("Primeiro Nome: $primeiro_nome")
+	println("Último Nome: $ultimo_nome")
+end
+
+# ╔═╡ 0a4dc5a5-5404-4d68-84f8-1867e7d8baff
+md"""## Exercício 28
+Escreva um programa que faça o computador "pensar" em um número inteiro entre 0 e 5 e peça para o usuário tentar descobrir qual foi o número escolhido pelo computador. O programa deverá escrever na tela se o usuário venceu ou perdeu."""
+
+# ╔═╡ e0686f83-be3c-4676-972d-bde718a1b523
+begin
+	rand(1:10)
+end
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
+HypertextLiteral = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [compat]
+HypertextLiteral = "~1.0.0"
 PlutoUI = "~0.7.83"
 """
 
@@ -194,7 +477,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.12.6"
 manifest_format = "2.0"
-project_hash = "e4dcbcd30a3d5ffa1505607c8b44298e5599088d"
+project_hash = "3af27d7eefb5819cc808f6347e3570a184f19075"
 
 [[deps.AbstractPlutoDingetjes]]
 git-tree-sha1 = "6c3913f4e9bdf6ba3c08041a446fb1332716cbc2"
@@ -451,5 +734,66 @@ version = "1.64.0+1"
 # ╠═2179a0c2-3e22-40fe-af17-d88eaef3589f
 # ╠═ea844bf2-5563-4af5-b0cd-dbcc7b0e15a5
 # ╠═01e7220f-77fd-4488-9df6-754cd5728fdd
+# ╟─ae0664b3-e585-4ee6-bf10-b14761c180bc
+# ╠═f4556d4b-fb89-41d0-8275-3326471d7dbe
+# ╠═32226171-41dd-4694-ab40-2fa9013554c6
+# ╠═c4aa2926-43db-4143-912c-de9692b92896
+# ╟─acf2f464-7d4a-4949-ac2f-71ea1bd7c4bb
+# ╠═949e2c16-5ca3-4b3c-ae3a-1dd27e712e53
+# ╠═6495b666-7050-4ac7-93cd-e6bfa791dd03
+# ╟─8961f80b-b84e-49a7-ad76-d91787c47470
+# ╠═a2739d35-8cf8-4926-883b-d620f680213a
+# ╠═0806798c-3a14-4054-a9ef-297c907a9b8f
+# ╟─015f354b-5f16-43b8-ba9e-40991c787993
+# ╠═596c1613-5b78-47f7-a8f6-58b10e52ccf5
+# ╠═f3b3ba63-6dfd-4daa-8aff-48a19b46515c
+# ╟─a91c5dbe-ea13-4044-9ce5-7822fe6be4b1
+# ╠═46127de8-c6ce-4f2c-9550-ceea616e49c0
+# ╠═a9eaaa20-9e78-424e-90d1-8daacfbe9beb
+# ╠═858c5382-b065-4ead-ae65-408f14fadf63
+# ╟─f88cec7e-0594-4e93-8051-97b9f1eb1453
+# ╠═f8a2193e-775b-48af-b522-e541ef583d9b
+# ╠═3e9c4fe6-7424-42e2-b884-e71d5d6e2266
+# ╟─0e909120-aefb-4445-ac99-4c40207876a5
+# ╠═ff66b45f-2d5c-4bb8-a84e-362ef9fdfeb5
+# ╠═d7b77f0e-b5dc-442f-b699-774e5956738b
+# ╠═28bbef28-43ea-42ca-8a55-f3bf767eb60d
+# ╟─38f15a68-76e5-45c5-9796-065735ef27d7
+# ╠═ba0dcb39-b579-4ac5-a0cf-8b4919f922cb
+# ╠═5c193c28-e9af-4576-9364-fbae8ed2e9ea
+# ╟─45816ffa-4de3-481e-b8da-71fba5f26239
+# ╠═db820568-eb19-42ea-a86b-07823b1b2d43
+# ╠═efec43cf-813d-4782-a0fc-3071b2c32296
+# ╠═061d9d73-cfc2-44da-86a7-3ae85df6d41c
+# ╠═79a16707-e58c-405a-aee2-5bcbded54948
+# ╠═db717a0b-847a-411e-97ba-ee9dad0a72f0
+# ╠═60708e1f-5256-48c5-a6d3-42fa704aa59c
+# ╠═5f7d57a0-fff7-41e5-af78-04a3f6c9c889
+# ╠═8105682d-5e0a-4615-a001-9f0249ced22f
+# ╠═67a0e5c6-e177-4280-a312-f2ee32935173
+# ╠═4c50e4c6-fb6e-4d3d-b368-6f0414471bf8
+# ╠═7796aa0d-02e7-471a-bb5d-1ed1438138a8
+# ╟─a1c8ccbf-bc97-4bd0-874f-7df8a2eeea7b
+# ╠═86eb8089-4899-4565-995d-5c2c4f6e4fd2
+# ╟─94a05f45-40e9-4f52-a5ab-b98d467f28a4
+# ╠═7c14a682-3647-417a-a6d3-9e0f93af0d32
+# ╠═3eec46c5-f29c-4f26-8017-79efb07a7731
+# ╟─883873c5-c368-4062-b402-9f991c008bb9
+# ╠═ad61a624-91ce-4908-807e-6c146d1b9413
+# ╠═193e3ef2-2e2a-4182-9a85-bd79cf68ab15
+# ╟─a47801c0-d6e3-44d3-862d-78f9c9b5e797
+# ╠═a98ff4f5-9513-4585-a76b-2d4e31063693
+# ╠═9445ae8b-c305-455b-bc44-5c34db3fabdf
+# ╟─45d5f4b9-2166-4d87-a5d9-dd37fd041a74
+# ╠═2409c92a-0936-459f-bf2e-af91c35cb1d3
+# ╠═6ccc6b56-fb54-4de0-b2a3-f2fff06634f2
+# ╟─e4aa11ec-122f-4d9c-98db-8fee38933109
+# ╠═3c26fe37-ca71-481d-80da-29c52ce4b713
+# ╠═2519ad15-63be-4082-a6fd-00b364553e19
+# ╟─e61cb836-6298-43a5-a7b4-c395df4a1b8f
+# ╠═aa10066d-2f97-410d-ac3c-5df167622402
+# ╠═1b8841ca-e1bf-4a4f-9525-60d3d280715b
+# ╟─0a4dc5a5-5404-4d68-84f8-1867e7d8baff
+# ╠═e0686f83-be3c-4676-972d-bde718a1b523
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
