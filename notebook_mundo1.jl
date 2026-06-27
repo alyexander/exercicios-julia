@@ -17,7 +17,7 @@ macro bind(def, element)
 end
 
 # ╔═╡ 858435bc-71d1-11f1-a682-a7922dda607a
-using PlutoUI
+using PlutoUI, Printf
 
 # ╔═╡ 24941a8f-3275-4730-9bbe-2aa3610a7ea9
 md"""# Exercícios do Mundo 1
@@ -35,7 +35,7 @@ md"""## Exercício 2
 Faça um programa que leia o nome de uma pessoa e mostre uma mensagem de boas-vindas."""
 
 # ╔═╡ 6a982050-6c1c-475a-bbd0-e478780cad63
-@bind nome TextField()
+@bind nome TextField(default="Antedeguemon")
 
 # ╔═╡ 4eea9b5f-3096-4e1b-add0-378304a2250a
 println("Olá, " * nome * "!")
@@ -58,7 +58,7 @@ md"""## Exercício 4
 Faça um programa que leia algo pelo teclado e mostre na tela o seu tipo primitivo e todas as informações possíveis sobre ele."""
 
 # ╔═╡ 5b640e50-80e6-4931-bb55-cef832d7be8e
-@bind algo TextField()
+@bind algo TextField(default="Antedeguemon")
 
 # ╔═╡ be22500b-8d93-48b3-824e-e2b2a51899ad
 begin
@@ -86,12 +86,103 @@ begin
 end
 
 # ╔═╡ bb773483-0717-4d3a-890d-c7f4b54b65b9
+md"""## Exercício 6
+Crie um algoritmo que leia um número e mostre o seu dobro, triplo e raiz quadrada."""
 
+# ╔═╡ 593b4d91-15f5-4556-840b-ba23b702ac1c
+@bind d Slider(0:99, show_value=true)
+
+# ╔═╡ 52abe88d-2d93-4c11-88b8-5bcfe4e0f7f4
+begin
+	println("O dobro de $d é $(d*2).")
+	println("O triplo de $d é $(d*3).")
+	println("A raíz quadrada de $d é $(@sprintf("%.2f", √d)).")
+end
+
+# ╔═╡ cf76db91-a718-47bd-8f15-e7ade6efb95a
+md"""## Exercício 7
+Desenvolva um programa que leia as duas notas de um aluno, calcule e mostre a sua média."""
+
+# ╔═╡ 4b6d118c-b39c-4a1c-8f25-87de24468a5f
+@bind n1 NumberField(default=5)
+
+# ╔═╡ c3861202-e048-4e7f-aee4-9e39682bba81
+@bind n2 NumberField(default=5)
+
+# ╔═╡ 5a6e7ede-10f9-4fd4-aa67-a228f559c3b2
+begin
+	m = (n1 + n2) / 2
+	println("A média entre $n1 e $n2 é igual a $(@sprintf("%.1f", m))")
+end
+
+# ╔═╡ cb836499-7231-41bb-babc-c3c4a65da6d9
+md"""## Exercício 8
+Escreva um programa que leia um valor em metros e o exiba convertido em centímetros e milímetros."""
+
+# ╔═╡ ba35f47e-a5c5-4f39-90cc-8cded7f5dbdb
+@bind mt NumberField(default=1)
+
+# ╔═╡ 974a6745-411e-4c58-98bf-08258bb7d0a8
+begin
+	println("$mt metros correspondem a: ")
+
+	println("$(mt / 1000) kilometros")
+	println("$(mt / 100) hectometros")
+	println("$(mt / 10) decametros")
+	println("$(mt * 10) decimetros")
+	println("$(mt * 100) centimetros")
+	println("$(mt * 1000) milimetros")
+end
+
+# ╔═╡ f6f87090-2ec3-4432-ac1d-56558b28a657
+md"""## Exercício 9
+Faça um programa que leia um número Inteiro qualquer e mostre na tela a sua tabuada."""
+
+# ╔═╡ 3b07763f-3388-4ddb-bbf7-83a3dfa5bfe1
+@bind α Slider(0:10, show_value=true)
+
+# ╔═╡ c620480e-ea75-46e6-b74d-aeaaf572101b
+begin
+	β = 1
+
+	println("-"^13)
+	println(@sprintf("%d x %2d = %3d", α, β, α * β))
+	β += 1
+	println(@sprintf("%d x %2d = %3d", α, β, α * β))
+	β += 1
+	println(@sprintf("%d x %2d = %3d", α, β, α * β))
+	β += 1
+	println(@sprintf("%d x %2d = %3d", α, β, α * β))
+	β += 1
+	println(@sprintf("%d x %2d = %3d", α, β, α * β))
+	β += 1
+	println(@sprintf("%d x %2d = %3d", α, β, α * β))
+	β += 1
+	println(@sprintf("%d x %2d = %3d", α, β, α * β))
+	β += 1
+	println(@sprintf("%d x %2d = %3d", α, β, α * β))
+	β += 1
+	println(@sprintf("%d x %2d = %3d", α, β, α * β))
+	β += 1
+	println(@sprintf("%d x %2d = %3d", α, β, α * β))
+	println("-"^13)
+end
+
+# ╔═╡ 2179a0c2-3e22-40fe-af17-d88eaef3589f
+md"""## Exercício 10
+Crie um programa que leia quanto dinheiro uma pessoa tem na carteira e mostre quantos dólares ela pode comprar."""
+
+# ╔═╡ ea844bf2-5563-4af5-b0cd-dbcc7b0e15a5
+@bind reais NumberField(default=5.16)
+
+# ╔═╡ 01e7220f-77fd-4488-9df6-754cd5728fdd
+println("Com R\$$reais você pode comprar até U\$$(@sprintf("%.2f", reais/5.16))")
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [compat]
 PlutoUI = "~0.7.83"
@@ -103,7 +194,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.12.6"
 manifest_format = "2.0"
-project_hash = "40c9f1cac973d64f8ca3ef3a09f769ff947e80f3"
+project_hash = "e4dcbcd30a3d5ffa1505607c8b44298e5599088d"
 
 [[deps.AbstractPlutoDingetjes]]
 git-tree-sha1 = "6c3913f4e9bdf6ba3c08041a446fb1332716cbc2"
@@ -344,6 +435,21 @@ version = "1.64.0+1"
 # ╟─49390a03-3b57-43ef-8214-c5b6ebef398c
 # ╠═689b744f-e03f-4d35-9d30-c387491500b2
 # ╠═21c82312-0be5-424f-937c-4cbe7ff5b205
-# ╠═bb773483-0717-4d3a-890d-c7f4b54b65b9
+# ╟─bb773483-0717-4d3a-890d-c7f4b54b65b9
+# ╠═593b4d91-15f5-4556-840b-ba23b702ac1c
+# ╠═52abe88d-2d93-4c11-88b8-5bcfe4e0f7f4
+# ╟─cf76db91-a718-47bd-8f15-e7ade6efb95a
+# ╠═4b6d118c-b39c-4a1c-8f25-87de24468a5f
+# ╠═c3861202-e048-4e7f-aee4-9e39682bba81
+# ╠═5a6e7ede-10f9-4fd4-aa67-a228f559c3b2
+# ╟─cb836499-7231-41bb-babc-c3c4a65da6d9
+# ╠═ba35f47e-a5c5-4f39-90cc-8cded7f5dbdb
+# ╠═974a6745-411e-4c58-98bf-08258bb7d0a8
+# ╠═f6f87090-2ec3-4432-ac1d-56558b28a657
+# ╠═3b07763f-3388-4ddb-bbf7-83a3dfa5bfe1
+# ╠═c620480e-ea75-46e6-b74d-aeaaf572101b
+# ╠═2179a0c2-3e22-40fe-af17-d88eaef3589f
+# ╠═ea844bf2-5563-4af5-b0cd-dbcc7b0e15a5
+# ╠═01e7220f-77fd-4488-9df6-754cd5728fdd
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
